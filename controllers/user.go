@@ -24,8 +24,7 @@ func (uc *userController) parseRequest(r *http.Request) (models.User, error) {
 
 	var u models.User
 
-	err := dec.Decode(&u)
-	if err != nil {
+	if err := dec.Decode(&u); err != nil {
 		return models.User{}, err
 	}
 
@@ -125,8 +124,7 @@ func (uc *userController) put(id int, w http.ResponseWriter, r *http.Request) {
 }
 
 func (uc *userController) delete(id int, w http.ResponseWriter) {
-	err := models.RemoveUserById(id)
-	if err != nil {
+	if err := models.RemoveUserById(id); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		return
